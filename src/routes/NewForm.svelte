@@ -6,6 +6,7 @@
     import { Calendar } from "$lib/components/ui/calendar";
     import { Switch } from "$lib/components/ui/switch";
     import { Slider } from "$lib/components/ui/slider";
+    import { Textarea } from "$lib/components/ui/textarea";
 
     import { toast } from "svelte-sonner";
 
@@ -16,10 +17,9 @@
 	import { buttonVariants } from "$lib/components/ui/button";
 	import { cn } from "$lib/utils";
 	import { CalendarIcon, Check, ChevronsUpDown } from "lucide-svelte";
-	import { tick } from "svelte";
-	import { useId } from "bits-ui";
 	import formdate from "$lib/constants";
 	import Button from "$lib/components/ui/button/button.svelte";
+
 
     let {data} : {data: {form: SuperValidated<Infer<CvsSchema>> } } = $props()
 
@@ -30,12 +30,11 @@
         validators: zodClient(cvsSchema),
         taintedMessage: null,
         onUpdated: ({ form: f }) => {
-            if (f.valid) {
-                
-                toast.success(`You submitted ${JSON.stringify(f.data, null, 2)}`);
+            if (f.valid) { 
+                toast.success(`Formulario para empresa: ${f.data.cliente} criado com sucesso!`);
             } else {
                 
-                toast.error("Please fix the errors in the form.");
+                toast.error("Por favor, corrija os erros no formulário.");
             }
         },
     })
@@ -54,22 +53,11 @@
 
     let placeholder = $state<DateValue>(today(getLocalTimeZone()))
 
-    let open = $state(false);
-
-    function closeAndFocusTrigger(triggerId: string) {
-        open = false
-        tick().then(() => {
-            document.getElementById(triggerId)?.focus()
-        })
-    }
-
-    const triggerId = useId()
-
     let valueLevel = $state(50)
 </script>
 
 <div>
-    <form method="POST" action="/create" class="space-y-8 py-8 w-full" use:enhance>
+    <form method="POST" action="?/create" class="space-y-8 py-8 w-full" use:enhance>
         <Form.Field {form} name="form_date" class="flex flex-col">
             <Form.Control>
               {#snippet children({ props })}
@@ -115,8 +103,8 @@
             </Form.Control>
         </Form.Field>
         <Form.Field {form} name="tecnico_forms" class="flex flex-col">
-            <Popover.Root bind:open>
-              <Form.Control id={triggerId}>
+            <Popover.Root >
+              <Form.Control>
                 {#snippet children({ props })}
                   <Form.Label>Tecnico responsavel pelo formulario</Form.Label>
                   <Popover.Trigger
@@ -149,7 +137,6 @@
                         value={tec.label}
                         onSelect={() => {
                           $formData.tecnico_forms = tec.value;
-                          closeAndFocusTrigger(triggerId);
                         }}
                       >
                         {tec.label}
@@ -171,8 +158,8 @@
             <Form.FieldErrors />
         </Form.Field>
         <Form.Field {form} name="tecnico_os" class="flex flex-col">
-            <Popover.Root>
-              <Form.Control>
+            <Popover.Root >
+              <Form.Control >
                 {#snippet children({ props })}
                   <Form.Label>Tecnico responsavel pelo formulario</Form.Label>
                   <Popover.Trigger
@@ -197,6 +184,7 @@
                     autofocus
                     placeholder="Encontra tecnico..."
                     class="h-9"
+                    
                   />
                   <Command.Empty>Tecnico não encontrado.</Command.Empty>
                   <Command.Group>
@@ -205,7 +193,6 @@
                         value={tec.label}
                         onSelect={() => {
                           $formData.tecnico_os = tec.value;
-                          closeAndFocusTrigger(triggerId);
                         }}
                       >
                         {tec.label}
@@ -227,8 +214,8 @@
             <Form.FieldErrors />
         </Form.Field>
         <Form.Field {form} name="cliente" class="flex flex-col">
-            <Popover.Root>
-              <Form.Control>
+            <Popover.Root >
+              <Form.Control >
                 {#snippet children({ props })}
                   <Form.Label>Cliente</Form.Label>
                   <Popover.Trigger
@@ -261,7 +248,6 @@
                         value={clt.label}
                         onSelect={() => {
                           $formData.cliente = clt.value;
-                          closeAndFocusTrigger(triggerId);
                         }}
                       >
                         {clt.label}
@@ -283,7 +269,7 @@
             <Form.FieldErrors />
         </Form.Field>
         <Form.Field {form} name="solicitante">
-          <Form.Control>
+          <Form.Control >
             {#snippet children({ props })}
               <Form.Label>Solicitante</Form.Label>
               <Input {...props} bind:value={$formData.solicitante} />
@@ -312,19 +298,20 @@
               {#snippet children({ props })}
                 <div class="space-y-0.5">
                   <Form.Label>Dificuldade da OS</Form.Label>
-                  <Form.Description>
-                    <Button size="sm" variant="ghost" onclick={() => { valueLevel = 0 }} class="text-green-600 font-bold">
+                  <Form.Description class="text-sm flex items-center justify-between">
+                    <Button size="sm" variant="ghost" onclick={() => { valueLevel = 0 }} class="text-green-600 font-bold text-sm">
                       Simples
                     </Button>
-                    <Button size="sm" variant="ghost" onclick={() => { valueLevel = 50 }} class="text-yellow-600 font-bold">
+                    <Button size="sm" variant="ghost" onclick={() => { valueLevel = 50 }} class="text-yellow-600 font-bold text-sm">
                       Intermediaria
                     </Button>
-                    <Button size="sm" variant="ghost" onclick={() => { valueLevel = 100 }} class="text-red-600 font-bold">
+                    <Button size="sm" variant="ghost" onclick={() => { valueLevel = 100 }} class="text-red-600 font-bold text-sm">
                       Dificil
                     </Button>
                   </Form.Description>
                 </div>
-                <Slider type="single"  value={valueLevel} max={100} step={50} />
+                <Slider type="single" bind:value={valueLevel} max={100} step={50} />
+                <input type="hidden" value={valueLevel} name="dificuldade_os">
               {/snippet}
             </Form.Control>
         </Form.Field>
@@ -363,7 +350,6 @@
                         value={def.label}
                         onSelect={() => {
                           $formData.defeito = def.value;
-                          closeAndFocusTrigger(triggerId);
                         }}
                       >
                         {def.label}
@@ -419,7 +405,6 @@
                         value={diag.label}
                         onSelect={() => {
                           $formData.solucao = diag.value;
-                          closeAndFocusTrigger(triggerId);
                         }}
                       >
                         {diag.label}
@@ -440,7 +425,23 @@
             </Form.Description>
             <Form.FieldErrors />
         </Form.Field>
-
+        <Form.Field {form} name="procedimento">
+          <Form.Control>
+            {#snippet children({ props })}
+              <Form.Label>Procedimento / Observacoes</Form.Label>
+              <Textarea
+                {...props}
+                placeholder="Descreva o procedimento realizado no atendimento"
+                class="resize-none"
+                bind:value={$formData.procedimento}
+              />
+              <Form.Description>
+                Descreva o procedimento realizado no atendimento.
+              </Form.Description>
+            {/snippet}
+          </Form.Control>
+          <Form.FieldErrors />
+        </Form.Field>
         <Form.Button type="submit" class="w-full">Criar formulario</Form.Button>
     </form>
 </div>

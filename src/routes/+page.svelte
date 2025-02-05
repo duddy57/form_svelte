@@ -4,6 +4,7 @@
 	import NewForm from "./NewForm.svelte";
 	import type { PageData } from "./$types";
 	import ModeToggle from "$lib/components/ModeToggle.svelte";
+	import ListForm from "./ListForm.svelte";
 
     let {data} : { data: PageData} = $props()
 </script>
@@ -21,13 +22,15 @@
             </Tabs.Trigger>
             <Tabs.Trigger value="password" class="gap-2 flex items-center justify-between">
                 <Folder class="h-4 w-4"/>
-                Lista de formularios
+                Listar formularios
             </Tabs.Trigger>
             </Tabs.List>
             <Tabs.Content value="new_form">
              <NewForm {data}/>
             </Tabs.Content>
-            <Tabs.Content value="password">Change your password here.</Tabs.Content>
+            <Tabs.Content value="password">
+                <ListForm {data} />
+            </Tabs.Content>
            </Tabs.Root>
     </div>
 </main>

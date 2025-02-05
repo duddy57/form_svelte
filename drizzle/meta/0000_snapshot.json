@@ -1,0 +1,105 @@
+{
+  "id": "476459ff-1706-4526-9b64-6035dbacd90c",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.cvs": {
+      "name": "cvs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "create_date": {
+          "name": "create_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'2025-02-04T23:14:49.775Z'"
+        },
+        "form_date": {
+          "name": "form_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tecnico_forms": {
+          "name": "tecnico_forms",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tecnico_os": {
+          "name": "tecnico_os",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cliente": {
+          "name": "cliente",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "solicitante": {
+          "name": "solicitante",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "necessario_tecnico": {
+          "name": "necessario_tecnico",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dificuldade_os": {
+          "name": "dificuldade_os",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "defeito": {
+          "name": "defeito",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "solucao": {
+          "name": "solucao",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "procedimento": {
+          "name": "procedimento",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

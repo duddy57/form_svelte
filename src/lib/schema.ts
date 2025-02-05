@@ -24,18 +24,8 @@ export const cvsSchema = z.object({
         })
     }),
     solicitante: z.string().min(2).max(50),
-    necessario_tecnico: z.boolean().default(false).transform(
-        (t) => (t ? 'Sim' : 'Não')
-    ),
-    dificuldade_os: z.number().transform((n) => {
-        if (n === 50) {
-          return "Intermediaria";
-        } else if (n > 50) {
-          return "Dificil";
-        } else {
-          return "Simples";
-        }
-      }),
+    necessario_tecnico: z.boolean().default(false),
+    dificuldade_os: z.number(),
     defeito: z.enum( formdate.def.map((d) => d.value) as [Defeito, ...Defeito[]], {
         errorMap: () => ({
             message: "Selecione o defeito"
@@ -45,7 +35,10 @@ export const cvsSchema = z.object({
         errorMap: () => ({
             message: "Selecione a solução"
         })
-    })
+    }),
+    procedimento: z.string({
+        required_error: "O procedimento é obrigatorio"
+    }).min(2).max(1000),
 });
  
 export type CvsSchema = typeof cvsSchema;
