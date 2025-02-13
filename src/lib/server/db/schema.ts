@@ -2,7 +2,7 @@ import { pgTable, serial, text, integer, timestamp, date } from 'drizzle-orm/pg-
 
 export const cvs = pgTable('cvs', {
 	id: serial('id').primaryKey(),
-	create_date: date('create_date').notNull().default(new Date().toISOString()),
+	create_date: date('create_date').defaultNow().notNull(),
 	form_date: date('form_date').notNull(),
 	tecnico_forms: text('tecnico_forms').notNull(),
 	tecnico_os: text('tecnico_os').notNull(),

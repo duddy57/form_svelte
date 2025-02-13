@@ -7,6 +7,7 @@
 	import { Switch } from '$lib/components/ui/switch';
 	import { Slider } from '$lib/components/ui/slider';
 	import { Textarea } from '$lib/components/ui/textarea';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
 
 	import { toast } from 'svelte-sonner';
 
@@ -21,29 +22,33 @@
 		parseDate,
 		today
 	} from '@internationalized/date';
-	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import { cn } from '$lib/utils';
-	import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-svelte';
+	import { CalendarIcon, Check, ChevronsUpDown, LoaderCircle } from 'lucide-svelte';
 	import formdate from '$lib/constants';
 
 	let { data }: { data: { form: SuperValidated<Infer<CvsSchema>> } } = $props();
+	let loading = $state(false)	
 
 	const form = superForm(data.form, {
 		validators: zodClient(cvsSchema),
 		taintedMessage: null,
 		onUpdated: ({ form: f }) => {
+			loading = true;
 			if (f.valid) {
+				loading = false;
 				toast.success(`Formulario para empresa: ${f.data.cliente} criado com sucesso!`);
 			} else {
+				loading = false;
 				toast.error('Por favor, corrija os erros no formulário.');
 			}
 		}
 	});
 
+
 	const { form: formData, enhance } = form;
 
 	const df = new DateFormatter('pt-BR', {
-		dateStyle: 'short'
+		dateStyle: 'medium'
 	});
 
 	let valueCalendar = $state<DateValue | undefined>();
@@ -152,7 +157,7 @@
 			<Popover.Root>
 				<Form.Control>
 					{#snippet children({ props })}
-						<Form.Label>Tecnico responsavel pelo formulario</Form.Label>
+						<Form.Label>Tecnico responsavel pelo atendimento</Form.Label>
 						<Popover.Trigger
 							class={cn(
 								buttonVariants({ variant: 'outline' }),
@@ -415,6 +420,13 @@
 			</Form.Control>
 			<Form.FieldErrors />
 		</Form.Field>
-		<Form.Button type="submit" class="w-full">Criar formulario</Form.Button>
+		<Form.Button type="submit" class="w-full tracking-tighter font-bold" disabled={loading}>
+			{#if loading}
+				Criando...
+				<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
+			{:else}
+				Criar formulario
+			{/if}
+		</Form.Button>
 	</form>
 </div>

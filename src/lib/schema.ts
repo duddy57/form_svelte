@@ -42,14 +42,3 @@ export const cvsSchema = z.object({
 });
 
 export type CvsSchema = typeof cvsSchema;
-
-export const listSchema = z.object({
-    cliente: z.enum(formdate.cliente.map((f) => f.value) as [Cliente, ...Cliente[]], {
-        errorMap: () => ({
-            message: "Selecione um cliente valido!"
-        })
-    }),
-    cvsresumido: z.boolean().default(false),
-})
-
-export type ListSchema = typeof listSchema
