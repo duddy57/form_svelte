@@ -1,22 +1,24 @@
 import type { PageServerLoad, Actions } from "./$types";
 import { superValidate } from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
-import { cvsSchema } from "$lib/schema.js";
+import { cvsSchema, listSchema } from "$lib/schema.js";
 import { fail } from "@sveltejs/kit";
 import { db } from "$lib/server/db";
 import { cvs } from "$lib/server/db/schema";
- 
+import { eq } from "drizzle-orm";
+import { ParseDataToCsv } from "$lib/utils";
+
 export const load: PageServerLoad = async () => {
- return {
-  form: await superValidate(zod(cvsSchema)),
-  list: await db.select({ cliente: cvs.cliente }).from(cvs)
- };
+    return {
+        form: await superValidate(zod(cvsSchema)),
+        list: await superValidate(zod(listSchema))
+    };
 };
 
 export const actions: Actions = {
     create: async (event) => {
         const form = await superValidate(event, zod(cvsSchema))
-        if(!form.valid) {
+        if (!form.valid) {
             return fail(400, {
                 form
             })
@@ -28,9 +30,9 @@ export const actions: Actions = {
         }
 
         function formatarDificuldade(data: number) {
-            if(data === 0) {
+            if (data === 0) {
                 return "Simples"
-            } else if(data === 50) {
+            } else if (data === 50) {
                 return "Intermediaria"
             } else {
                 return "Dificil"
@@ -48,6 +50,40 @@ export const actions: Actions = {
 
         return {
             form
+        }
+    },
+    list: async (event) => {
+        const form = await superValidate(event, zod(listSchema))
+        if (!form.valid) {
+            return fail(400, {
+                form
+            })
+        }
+
+        if (form.data.cvsresumido === true) {
+            let result = []
+            result = await db.select({
+                data: cvs.form_date,
+                tecnico: cvs.tecnico_os,
+                cliente: cvs.cliente,
+                solicitante: cvs.solicitante,
+                defeito: cvs.defeito,
+                solucao: cvs.solucao,
+                procedimento: cvs.procedimento
+            }).from(cvs).where(eq(cvs.cliente, form.data.cliente))
+
+            if (result.length === 0) {
+                console.log("Nenhum dado encontrado.");
+                return;
+            }
+
+            await ParseDataToCsv(result, form.data.cliente)
+
+        } else {
+            console.log("teste")
+            return {
+                form
+            }
         }
     }
 }

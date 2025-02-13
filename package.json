@@ -23,6 +23,8 @@
 		"@sveltejs/adapter-vercel": "^5.5.2",
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
+		"@types/file-saver": "^2.0.7",
+		"@types/papaparse": "^5.3.15",
 		"autoprefixer": "^10.4.20",
 		"bits-ui": "^1.0.0-next.86",
 		"clsx": "^2.1.1",
@@ -53,6 +55,9 @@
 	"dependencies": {
 		"@neondatabase/serverless": "^0.10.4",
 		"@tanstack/table-core": "^8.20.5",
-		"drizzle-orm": "^0.38.4"
+		"drizzle-orm": "^0.38.4",
+		"file-save": "^0.2.0",
+		"file-saver": "^2.0.5",
+		"papaparse": "^5.5.2"
 	}
 }
