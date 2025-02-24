@@ -172,6 +172,12 @@ const formdate = {
     { label: 'ENVIO DE ARQUIVOS', value: 'ENVIO DE ARQUIVOS' },
     { label: 'PROVISIONAMENTO DO APLICATIVO MOVEL OU DESKTOP', value: 'PROVISIONAMENTO DO APLICATIVO MOVEL OU DESKTOP' },
   ] as const,
+
+  role : [
+    {label: "Administrador", value: "Administrador"},
+    {label: "Tecnico Interno", value: "Tecnico Interno"},
+    {label: "Tecnico Externo", value: "Tecnico Externo"}
+  ] as const
 }
 
 

@@ -1,6 +1,6 @@
 {
-  "id": "2b188b0d-e7e1-4f65-abc2-ce11b3c3f79a",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "8e6c9dbc-a18f-47e3-a96a-61e720a263bf",
+  "prevId": "7c2622fa-e0cc-4f16-b978-131da44d9d64",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -81,9 +81,9 @@
         },
         "tecnico_os": {
           "name": "tecnico_os",
-          "type": "text",
+          "type": "text[1]",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "cliente": {
           "name": "cliente",
@@ -130,15 +130,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "cvs_tecnico_forms_user_id_fk": {
-          "name": "cvs_tecnico_forms_user_id_fk",
+        "cvs_tecnico_forms_user_email_fk": {
+          "name": "cvs_tecnico_forms_user_email_fk",
           "tableFrom": "cvs",
           "tableTo": "user",
           "columnsFrom": [
             "tecnico_forms"
           ],
           "columnsTo": [
-            "id"
+            "email"
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
@@ -225,6 +225,12 @@
         },
         "password_hash": {
           "name": "password_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
           "type": "text",
           "primaryKey": false,
           "notNull": true

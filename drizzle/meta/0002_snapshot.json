@@ -1,6 +1,6 @@
 {
-  "id": "2b188b0d-e7e1-4f65-abc2-ce11b3c3f79a",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "7c2622fa-e0cc-4f16-b978-131da44d9d64",
+  "prevId": "ce8a25d0-b47c-4460-bb13-0b619e2d2170",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -130,15 +130,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "cvs_tecnico_forms_user_id_fk": {
-          "name": "cvs_tecnico_forms_user_id_fk",
+        "cvs_tecnico_forms_user_email_fk": {
+          "name": "cvs_tecnico_forms_user_email_fk",
           "tableFrom": "cvs",
           "tableTo": "user",
           "columnsFrom": [
             "tecnico_forms"
           ],
           "columnsTo": [
-            "id"
+            "email"
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
@@ -225,6 +225,12 @@
         },
         "password_hash": {
           "name": "password_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
           "type": "text",
           "primaryKey": false,
           "notNull": true

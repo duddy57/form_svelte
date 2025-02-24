@@ -27,7 +27,7 @@
 		"@types/json2csv": "^5.0.7",
 		"@types/papaparse": "^5.3.15",
 		"autoprefixer": "^10.4.20",
-		"bits-ui": "^1.0.0-next.92",
+		"bits-ui": "^1.2.0",
 		"clsx": "^2.1.1",
 		"drizzle-kit": "^0.30.2",
 		"eslint": "^9.18.0",
@@ -55,12 +55,14 @@
 	},
 	"dependencies": {
 		"@neondatabase/serverless": "^0.10.4",
+		"@paralleldrive/cuid2": "^2.2.2",
 		"@tanstack/table-core": "^8.20.5",
 		"drizzle-orm": "^0.38.4",
 		"file-save": "^0.2.0",
 		"file-saver": "^2.0.5",
 		"json-2-csv": "^5.5.8",
 		"json2csv": "^6.0.0-alpha.2",
+		"lucia": "^3.2.2",
 		"papaparse": "^5.5.2",
 		"xlsx": "^0.18.5",
 		"xlsx-style": "^0.8.13"

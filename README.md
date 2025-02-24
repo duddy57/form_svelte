@@ -96,7 +96,7 @@
 					</Command.Root>
 				</Popover.Content>
 			</Popover.Root>
-			<Form.FieldErrors />
+			<Form.FieldErrors class="font-bold" />
 		</Form.Field>
 		<Form.Field
 			{form}
@@ -119,17 +119,17 @@
 		<Form.Button class="w-[380px]" type="submit">Gera cvs</Form.Button>
 	</form>
 
-	<div>
-		<h1>Ultimos cvs gerados</h1>
-		<Accordion.Root type="single">
-			<Accordion.Item value="item-1">
-				<Accordion.Trigger>Is it accessible?</Accordion.Trigger>
-				<Accordion.Content>Yes. It adheres to the WAI-ARIA design pattern.</Accordion.Content>
-			</Accordion.Item>
-		</Accordion.Root>
-	</div>
-</div>
+    <div>
+    	<h1>Ultimos cvs gerados</h1>
+    	<Accordion.Root type="single">
+    		<Accordion.Item value="item-1">
+    			<Accordion.Trigger>Is it accessible?</Accordion.Trigger>
+    			<Accordion.Content>Yes. It adheres to the WAI-ARIA design pattern.</Accordion.Content>
+    		</Accordion.Item>
+    	</Accordion.Root>
+    </div>
 
+</div>
 
 <script lang="ts">
   import * as Command from "$lib/components/ui/command";
@@ -231,49 +231,49 @@
     </Popover.Content>
   </Popover.Root>
 
-  <Popover.Root>
-    <Popover.Trigger class={cn(buttonVariants({ variant: "outline" }), !valueDate && "text-muted-foreground")}>
-      <CalendarIcon class="mr-2 size-4" />
-      {#if formattedStartDate}
-        {#if formattedEndDate}
-          {formattedStartDate} - {formattedEndDate}
-        {:else}
-          {formattedStartDate}
-        {/if}
-      {:else}
-        Selecione uma data
-      {/if}
-    </Popover.Trigger>
-    <Popover.Content class="w-auto p-0" align="start">
-      <Select.Root
-      type="single"
-      bind:value={() => valueString,
-      (v) => {
-        if (!v) return;
-        value = today(getLocalTimeZone()).add({ days: Number.parseInt(v) });
-      }}
-    >
-      <Select.Trigger>
-        {valueString}
-      </Select.Trigger>
-      <Select.Content>
-        {#each items as item}
-          <Select.Item value={`${item.value}`}>{item.label}</Select.Item>
-        {/each}
-      </Select.Content>
-    </Select.Root>
-    <div class="rounded-md border">
-      <RangeCalendar
-      bind:value
-      onStartValueChange={(v) => {
-        startValue = v;
-      }}
-      numberOfMonths={2}
-    />
-    </div>
+<Popover.Root>
+<Popover.Trigger class={cn(buttonVariants({ variant: "outline" }), !valueDate && "text-muted-foreground")}>
+<CalendarIcon class="mr-2 size-4" />
+{#if formattedStartDate}
+{#if formattedEndDate}
+{formattedStartDate} - {formattedEndDate}
+{:else}
+{formattedStartDate}
+{/if}
+{:else}
+Selecione uma data
+{/if}
+</Popover.Trigger>
+<Popover.Content class="w-auto p-0" align="start">
+<Select.Root
+type="single"
+bind:value={() => valueString,
+(v) => {
+if (!v) return;
+value = today(getLocalTimeZone()).add({ days: Number.parseInt(v) });
+}} >
+<Select.Trigger>
+{valueString}
+</Select.Trigger>
+<Select.Content>
+{#each items as item}
+<Select.Item value={`${item.value}`}>{item.label}</Select.Item>
+{/each}
+</Select.Content>
+</Select.Root>
+<div class="rounded-md border">
+<RangeCalendar
+bind:value
+onStartValueChange={(v) => {
+startValue = v;
+}}
+numberOfMonths={2}
+/>
+</div>
 
     </Popover.Content>
-  </Popover.Root>
+
+</Popover.Root>
 
   <div class="flex justify-between items-center">
     <Button
